@@ -23,17 +23,125 @@
  */
 package chroma;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.alee.laf.rootpane.WebFrame;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author amr
  */
-public class Chroma extends javax.swing.JFrame {
+public class Chroma extends WebFrame {
 
     /**
      * Creates new form Chroma
      */
     public Chroma() {
-        initComponents();
+        
+        setSize(
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 400,
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 400);
+
+        setMinimumSize(new Dimension(500, 500));
+        setLocationRelativeTo(null);
+        
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
+        //initComponents();
+
+        initMenuBar();
+        initToolBar();
+        setLocationRelativeTo(null);
+    }
+
+    private void initMenuBar() {
+        menuBar = new MenuBar();
+        
+        menuBar.about.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                About about = new About();
+                //about.show();
+            }
+        });
+        
+        setJMenuBar(menuBar);
+    }
+    
+    private void initToolBar(){
+        toolBar = new ToolBar();
+        
+        add(toolBar, BorderLayout.NORTH);
+        
+        toolBar.newFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.newFile.doClick();
+            }
+        });
+        
+        toolBar.open.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.open.doClick();
+            }
+        });
+        
+        toolBar.save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.save.doClick();
+            }
+        });
+        
+        toolBar.saveAs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.saveAs.doClick();
+            }
+        });
+        
+        toolBar.copy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.copy.doClick();
+            }
+        });
+        
+        toolBar.cut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.cut.doClick();
+            }
+        });
+        
+        toolBar.paste.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.paste.doClick();
+            }
+        });
+        
+        toolBar.undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.undo.doClick();
+            }
+        });
+        
+        toolBar.redo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                menuBar.redo.doClick();
+            }
+        });
+
     }
 
     /**
@@ -99,4 +207,6 @@ public class Chroma extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private MenuBar menuBar;
+    private ToolBar toolBar = null;
 }
