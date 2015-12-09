@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 amr.
+ * Copyright 2015 ahmed.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,19 +25,20 @@ package shapes;
 
 /**
  *
- * @author amr
+ * @author ahmed
  */
 public class Point {
+
     private int x;
     private int y;
-    
+
     public Point() {
     }
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-    }   
+    }
 
     public int getX() {
         return x;
@@ -54,5 +55,9 @@ public class Point {
     public void setY(int y) {
         this.y = y;
     }
-    
+
+    public boolean isSelected(Selection select) {
+        return !(this.x < select.x || this.x > select.X || this.y > select.Y || this.y < select.y);
+    }
+
 }

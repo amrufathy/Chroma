@@ -68,11 +68,11 @@ public abstract class Shape {
     
     public abstract void draw(Graphics g);
     
-    public abstract boolean isSelected();
+    public abstract boolean isSelected(Selection select);
     
     public abstract void resize();
     
-    public abstract void move(Point newBasePoint);
+    public abstract void move(Point newBasePoint, Point endPoint);
     
     public abstract void paint(Graphics g);
     

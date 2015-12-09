@@ -23,10 +23,13 @@
  */
 package gui;
 
+import java.awt.Event;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -72,29 +75,80 @@ public class MenuBar extends JMenuBar {
     
     public MenuBar(){
         fileMenu.add(newFile);
+        newFile.setMnemonic('N');
+        newFile.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_N,
+                        Event.CTRL_MASK));
         fileMenu.add(open);
+        open.setMnemonic('O');
+        open.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_O,
+                        Event.CTRL_MASK));
         fileMenu.addSeparator();
         fileMenu.add(save);
+        save.setMnemonic('S');
+        save.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_S,
+                        Event.CTRL_MASK));
         fileMenu.add(saveAs);
+        saveAs.setAccelerator(
+                KeyStroke.getKeyStroke("control alt S"));
         fileMenu.addSeparator();
         fileMenu.add(exportMenu);
         exportMenu.add(exportAsJpg);
         exportMenu.add(exportAsPng);
         fileMenu.addSeparator();
         fileMenu.add(exit);
+        exit.setMnemonic('E');
+        exit.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_F4,
+                        Event.ALT_MASK));
+
         
         add(fileMenu);
         
         editMenu.add(cut);
+        cut.setMnemonic('X');
+        cut.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_X,
+                        Event.CTRL_MASK));
         editMenu.add(copy);
+        copy.setMnemonic('C');
+        copy.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_C,
+                        Event.CTRL_MASK));
         editMenu.add(paste);
+        paste.setMnemonic('V');
+        paste.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_V,
+                        Event.CTRL_MASK));
         editMenu.addSeparator();
         editMenu.add(undo);
+        undo.setMnemonic('U');
+        undo.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_Z,
+                        Event.CTRL_MASK));
         editMenu.add(redo);
+        redo.setMnemonic('R');
+        redo.setAccelerator(
+                KeyStroke.getKeyStroke(
+                        KeyEvent.VK_Y,
+                        Event.CTRL_MASK));        
         
         add(editMenu);
         
         helpMenu.add(about);
+        about.setMnemonic('A');
+        about.setAccelerator(
+                KeyStroke.getKeyStroke("F1"));
         
         add(helpMenu);
     }
