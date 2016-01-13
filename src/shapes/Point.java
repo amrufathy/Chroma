@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 ahmed.
+ * Copyright 2015 amr.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,15 @@
  */
 package shapes;
 
-/**
- *
- * @author ahmed
- */
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 public class Point {
 
     private int x;
     private int y;
-
-    public Point() {
-    }
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+    protected Color Temp;
+    private final String type = "point";
 
     public int getX() {
         return x;
@@ -56,8 +49,42 @@ public class Point {
         this.y = y;
     }
 
+    public Point(int x, int y) {
+
+        this.x = x;
+        this.y = y;
+    }
+
     public boolean isSelected(Selection select) {
         return !(this.x < select.x || this.x > select.X || this.y > select.Y || this.y < select.y);
+    }
+
+    public void selectionView(Graphics2D g2d) {
+        Temp = g2d.getColor();
+        g2d.setColor(Color.black);
+        g2d.drawOval(x - 4, y - 4, 8, 8);
+        g2d.setColor(Color.white);
+        g2d.fillOval(x - 4, y - 4, 8, 8);
+        g2d.setColor(Temp);
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Point other = (Point) obj;
+        if (this.x != other.x) {
+            return false;
+        }
+        if (this.y != other.y) {
+            return false;
+        }
+        return true;
     }
 
 }

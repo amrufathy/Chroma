@@ -25,30 +25,12 @@ package shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-/**
- *
- * @author amr
- */
 public abstract class Shape {
+
     protected Point basePoint;
     protected Color color;
-
-    public Shape() {
-    }
-
-    public Shape(Point basePoint) {
-        this.basePoint = basePoint;
-    }
-    
-    public Shape(Color color) {
-        this.color = color;
-    }
-
-    public Shape(Point basePoint, Color color) {
-        this.basePoint = basePoint;
-        this.color = color;
-    }
 
     public Point getBasePoint() {
         return basePoint;
@@ -65,15 +47,29 @@ public abstract class Shape {
     public void setColor(Color color) {
         this.color = color;
     }
-    
-    public abstract void draw(Graphics g);
-    
+
+    public Shape(Point basePoint, Color color) {
+        this.basePoint = basePoint;
+        this.color = color;
+    }
+
+    public void paint(Graphics g) {
+        this.color = g.getColor();
+    }
+
+    @Override
+    public String toString() {
+        return "Shape{" + "basePoint = " + basePoint + ", color = " + color + "}";
+    }
+
     public abstract boolean isSelected(Selection select);
-    
-    public abstract void resize();
-    
-    public abstract void move(Point newBasePoint, Point endPoint);
-    
-    public abstract void paint(Graphics g);
-    
+
+    public abstract void draw(Graphics g);
+
+    public abstract void selectionView(Graphics2D g2d);
+
+    public abstract void move(Point BasePoint, Point endPoint);
+
+    public abstract void resize(Point BasePoint, Point endPoint);
+
 }

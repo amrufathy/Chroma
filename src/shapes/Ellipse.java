@@ -32,9 +32,14 @@ import java.awt.Graphics2D;
  * @author amr
  */
 public class Ellipse extends Shape {
-    
-    protected int radius1;
-    protected int radius2;
+
+    private int radius1;
+    private int radius2;
+    private Point P1;
+    private Point P2;
+    private Point P3;
+    private Point P4;
+    private String type = "ellipse";
 
     public int getRadius1() {
         return radius1;
@@ -44,47 +49,69 @@ public class Ellipse extends Shape {
         return radius2;
     }
 
-    public void setRadius1(int radius1) {
-        this.radius1 = radius1;
-    }
-
-    public void setRadius2(int radius2) {
-        this.radius2 = radius2;
-    }
-
-    public Ellipse(int radius1, int radius2, Point basePoint, Color color) {
+    public Ellipse(Point endPoint, Point basePoint, Color color) {
         super(basePoint, color);
-        this.radius1 = radius1;
-        this.radius2 = radius2;
+
+        this.radius1 = Math.abs(endPoint.getX() - basePoint.getX());
+        this.radius2 = Math.abs(endPoint.getY() - basePoint.getY());
+
+        P1 = new Point(basePoint.getX() + radius1, basePoint.getY());
+        P2 = new Point(basePoint.getX(), basePoint.getY() - radius2);
+        P3 = new Point(basePoint.getX(), basePoint.getY() + radius2);
+        P4 = new Point(basePoint.getX() - radius1, basePoint.getY());
     }
 
-    public Ellipse() {
-    }
-    
     @Override
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawOval(this.basePoint.getX(), this.basePoint.getY(), radius1, radius2);
+        g2.drawOval(this.basePoint.getX() - radius1, this.basePoint.getY() - radius2, (2 * radius1), (2 * radius2));
     }
 
     @Override
     public boolean isSelected(Selection select) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return P1.isSelected(select) && P2.isSelected(select) && P3.isSelected(select) && P4.isSelected(select);
     }
 
     @Override
-    public void resize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void selectionView(Graphics2D g2d) {
+        P1.selectionView(g2d);
+        P2.selectionView(g2d);
+        P3.selectionView(g2d);
+        P4.selectionView(g2d);
     }
 
     @Override
-    public void move(Point newBasePoint, Point endPoint) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void move(Point BasePoint, Point endPoint) {
+        int deltaX = endPoint.getX() - BasePoint.getX();
+        int deltaY = endPoint.getY() - BasePoint.getY();
+
+        basePoint.setX(basePoint.getX() + deltaX);
+        basePoint.setY(basePoint.getY() + deltaY);
+
+        P1.setX(P1.getX() + deltaX);
+        P1.setY(P1.getY() + deltaY);
+        P2.setX(P2.getX() + deltaX);
+        P2.setY(P2.getY() + deltaY);
+        P3.setX(P3.getX() + deltaX);
+        P3.setY(P3.getY() + deltaY);
+        P4.setX(P4.getX() + deltaX);
+        P4.setY(P4.getY() + deltaY);
     }
 
     @Override
-    public void paint(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void resize(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+        int x1 = BasePoint.getX();
+        int x2 = endPoint.getX();
+        int y1 = BasePoint.getY();
+        int y2 = endPoint.getY();
+
+        radius1 += deltaX;
+        radius2 += deltaY;
     }
-    
+
+    public boolean hasPoint(Point p) {
+        return p.equals(P1) || p.equals(P2) || p.equals(P3) || p.equals(P4);
+    }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 ahmed.
+ * Copyright 2015 amr.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,40 +27,19 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author ahmed
- */
 public class Rectangle extends Shape {
 
-    protected int width;
-    protected int length;
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
-    }
-    protected int X;
-    protected int Y;
-    protected int x;
-    protected int y;
-    protected Point P1;
-    protected Point P2;
-    protected Point P3;
-    protected Point P4;
-    
-    
+    private int width;
+    private int length;
+    private int X;
+    private int Y;
+    private int x;
+    private int y;
+    private Point P1;
+    private Point P2;
+    private Point P3;
+    private Point P4;
+    private final String type = "rectangle";
 
     public Rectangle(Point basePoint, Color color, Point endPoint) {
         super(basePoint, color);
@@ -77,14 +56,17 @@ public class Rectangle extends Shape {
         P2 = new Point(x + width, y);
         P3 = new Point(x + width, y + length);
         P4 = new Point(x, y + length);
-
     }
 
     @Override
-    public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
+    public void resize(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+        int x1 = BasePoint.getX();
+        int x2 = endPoint.getX();
 
-        g2.drawRect(this.x, this.y, this.width, this.length);
+        width += deltaX;
+        length += deltaY;
     }
 
     @Override
@@ -93,18 +75,47 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public void resize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void draw(Graphics g) {
+        //where end point is the second click of the mouse
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawRect(this.x, this.y, this.width, this.length);
     }
 
     @Override
-    public void move(Point newBasePoint, Point endPoint) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void selectionView(Graphics2D g2d) {
+        P1.selectionView(g2d);
+        P2.selectionView(g2d);
+        P3.selectionView(g2d);
+        P4.selectionView(g2d);
     }
 
     @Override
-    public void paint(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void move(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+
+        x = x + deltaX;
+        y = y + deltaY;
+        P1.setX(x);
+        P1.setY(y);
+        P2.setX(x + width);
+        P2.setY(y);
+        P3.setX(x + width);
+        P3.setY(y + length);
+        P4.setX(x);
+        P4.setY(y + length);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public boolean hasPoint(Point p) {
+        return p.equals(P1) || p.equals(P2) || p.equals(P3) || p.equals(P4);
     }
 
 }

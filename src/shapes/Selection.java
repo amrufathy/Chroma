@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 ahmed.
+ * Copyright 2015 ahmedmasoud.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,24 +30,23 @@ import java.awt.Graphics2D;
 
 /**
  *
- * @author ahmed
+ * @author ahmedmasoud
  */
 public class Selection extends Shape {
 
-    protected int width;
-    protected int length;
+    private int width;
+    private int height;
     protected int X;
     protected int Y;
     protected int x;
     protected int y;
-    protected Point P1;
-    protected Point P2;
-    protected Point P3;
-    protected Point P4;
+    private Point P1;
+    private Point P2;
+    private Point P3;
+    private Point P4;
     final static float segment1[] = {
         10.0f
     };
-    
     final static BasicStroke segment = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, segment1, 0.0f);
 
     public Selection(Point basePoint, Color color, Point endPoint) {
@@ -61,16 +60,7 @@ public class Selection extends Shape {
         P2 = new Point(X, y);
         P3 = new Point(x, Y);
         P4 = new Point(x, Y);
-        
-    }
 
-    @Override
-    public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(segment);
-        this.width = X - x;
-        this.length = Y - y;
-        g2.drawRect(P1.getX(), P1.getY(), width, length);
     }
 
     @Override
@@ -79,18 +69,38 @@ public class Selection extends Shape {
     }
 
     @Override
-    public void resize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void draw(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(segment);
+        this.width = X - x;
+        this.height = Y - y;
+        g2.drawRect(P1.getX(), P1.getY(), width, height);
     }
 
     @Override
-    public void move(Point newBasePoint, Point endPoint) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void selectionView(Graphics2D g2d) {
     }
 
     @Override
-    public void paint(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void move(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+        P1.setX(P1.getX() + deltaX);
+        P1.setY(P1.getY() + deltaY);
+        P2.setX(P2.getX() + deltaX);
+        P2.setY(P2.getY() + deltaY);
+        P3.setX(P3.getX() + deltaX);
+        P3.setY(P3.getY() + deltaY);
+        P4.setX(P4.getX() + deltaX);
+        P4.setY(P4.getY() + deltaY);
+    }
+
+    public boolean has(Point pt) {
+        return pt.getX() > x && pt.getX() < X && pt.getY() > y && pt.getY() < Y;
+    }
+
+    @Override
+    public void resize(Point BasePoint, Point endPoint) {
     }
 
 }

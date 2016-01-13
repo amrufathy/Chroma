@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 ahmed.
+ * Copyright 2015 amr.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author ahmed
- */
 public class Triangle extends Shape {
 
     Point P1;
@@ -39,32 +35,16 @@ public class Triangle extends Shape {
     int Temp;
     int x;
     int y;
+    private final String type = "triangle";
 
-    public Point getSecondPoint() {
-        return P2;
-    }
-
-    public Point getThirdPoint() {
-        return P3;
-    }
-
-    public void setSecondPoint(Point P2) {
-        this.P2 = P2;
-    }
-
-    public void setThirdPoint(Point P3) {
-        this.P3 = P3;
-    }
-    
     public Triangle(Point basePoint, Color color, Point secondPoint) {
         super(basePoint, color);
-        this.P2 = secondPoint;
         P1 = this.basePoint;
+        P2 = secondPoint;
         Temp = Math.abs(P1.getX() - P2.getX());
         x = P1.getX() > P2.getX() ? P1.getX() + Temp : P1.getX() - Temp;
         y = P2.getY();
         P3 = new Point(x, y);
-
     }
 
     @Override
@@ -82,18 +62,44 @@ public class Triangle extends Shape {
     }
 
     @Override
-    public void resize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void selectionView(Graphics2D g2d) {
+        P1.selectionView(g2d);
+        P2.selectionView(g2d);
+        P3.selectionView(g2d);
     }
 
     @Override
-    public void move(Point newBasePoint, Point endPoint) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void move(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+
+        P1.setX(P1.getX() + deltaX);
+        P1.setY(P1.getY() + deltaY);
+        P2.setX(P2.getX() + deltaX);
+        P2.setY(P2.getY() + deltaY);
+        P3.setX(P3.getX() + deltaX);
+        P3.setY(P3.getY() + deltaY);
     }
 
     @Override
-    public void paint(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void resize(Point BasePoint, Point endPoint) {
+        P2 = endPoint;
+        Temp = Math.abs(P1.getX() - P2.getX());
+        x = P1.getX() > P2.getX() ? P1.getX() + Temp : P1.getX() - Temp;
+        y = P2.getY();
+        P3 = new Point(x, y);
+    }
+
+    public Point getSecondPoint() {
+        return P2;
+    }
+
+    public Point getThirdPoint() {
+        return P3;
+    }
+
+    public boolean hasPoint(Point p) {
+        return p.equals(P1) || p.equals(P2) || p.equals(P3);
     }
 
 }

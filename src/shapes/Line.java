@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 ahmed.
+ * Copyright 2015 amr.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,22 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author ahmed
- */
 public class Line extends Shape {
-    
+
     private Point secondPoint;
+    private final String type = "line";
+
+    public Line(Point basePoint, Color color, Point secondPoint) {
+        super(basePoint, color);
+        this.secondPoint = secondPoint;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(this.color);
+        g2.drawLine(basePoint.getX(), basePoint.getY(), secondPoint.getX(), secondPoint.getY());
+    }
 
     public Point getSecondPoint() {
         return secondPoint;
@@ -43,42 +52,41 @@ public class Line extends Shape {
         this.secondPoint = secondPoint;
     }
 
-    public Line(Point secondPoint, Point basePoint, Color color) {
-        super(basePoint, color);
-        this.secondPoint = secondPoint;
-    }
-    
-    @Override
-    public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(this.color);
-        g2.drawLine(basePoint.getX(), basePoint.getY(), secondPoint.getX(), secondPoint.getY());
-
-    }
-
     @Override
     public boolean isSelected(Selection select) {
         return basePoint.isSelected(select) && secondPoint.isSelected(select);
     }
 
     @Override
-    public void resize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void selectionView(Graphics2D g2d) {
+        basePoint.selectionView(g2d);
+        secondPoint.selectionView(g2d);
     }
 
     @Override
-    public void move(Point newBasePoint, Point endPoint) {
-        int deltaX = endPoint.getX() - newBasePoint.getX();
-        int deltaY = endPoint.getY() - newBasePoint.getY();
+    public void move(Point BasePoint, Point endPoint) {
+        int deltaX = endPoint.getX() - BasePoint.getX();
+        int deltaY = endPoint.getY() - BasePoint.getY();
+
         basePoint.setX(basePoint.getX() + deltaX);
         basePoint.setY(basePoint.getY() + deltaY);
-        endPoint.setX(endPoint.getX() + deltaX);
-        endPoint.setY(endPoint.getY() + deltaY);
+
+        secondPoint.setX(secondPoint.getX() + deltaX);
+        secondPoint.setY(secondPoint.getY() + deltaY);
     }
 
     @Override
-    public void paint(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void resize(Point BasePoint, Point endPoint) {
+        int deltaX = (endPoint.getX() - BasePoint.getX());
+        int deltaY = (endPoint.getY() - BasePoint.getY());
+        int x1 = BasePoint.getX();
+        int x2 = endPoint.getX();
+        int y1 = BasePoint.getY();
+        int y2 = endPoint.getY();
+        secondPoint = endPoint;
     }
 
+    public boolean hasPoint(Point p) {
+        return p.equals(basePoint) || p.equals(secondPoint);
+    }
 }
