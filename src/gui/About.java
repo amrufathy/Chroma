@@ -23,29 +23,40 @@
  */
 package gui;
 
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.text.WebTextArea;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  *
  * @author amr
  */
-public class About extends JFrame {
-    
+public class About extends WebFrame {
+
     public About() {
         super();
-        
+
         setSize(250, 250);
         setLocationRelativeTo(null);
-        
-        JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
-        
+        setIconImage(new ImageIcon("res/icon.png").getImage());
+        setTitle("About Chroma");
+
+        WebLabel logo = new WebLabel(new ImageIcon("res/icon.png"));
+
+        WebTextArea team = new WebTextArea(
+                "Chroma\nMade By:\n"
+                + "Amr Fathy\n"
+                + "Ahmed Ehab\n"
+                + "Mohamed Ghannam\n"
+                + "Alaa Asfour");
+
+        team.setEditable(false);
+
         add(logo);
-        
-        logo.show();
-        
+        add(team);
+
         setAlwaysOnTop(true);
     }
-    
+
 }
