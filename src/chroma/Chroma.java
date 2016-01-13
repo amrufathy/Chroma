@@ -31,14 +31,17 @@ import gui.MainWindow;
  * @author amr
  */
 public class Chroma {
-    
+
     public static void main(String[] args) {
+        
         WebLookAndFeel.install();
         WebLookAndFeel.setDecorateFrames(true);
         WebLookAndFeel.setDecorateDialogs(true);
-        
+
         MainWindow mainWindow = new MainWindow();
+
         mainWindow.show();
+
     }
-    
+
 }
